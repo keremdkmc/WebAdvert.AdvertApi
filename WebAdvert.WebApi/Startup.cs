@@ -12,6 +12,7 @@ using AutoMapper;
 using System.Reflection;
 using WebAdvert.WebApi.Services;
 using WebAdvert.WebApi.Implementations;
+using WebAdvert.WebApi.HealthChecks;
 
 namespace WebAdvert.WebApi
 {
@@ -38,6 +39,8 @@ namespace WebAdvert.WebApi
             services.AddSingleton(mapper);
 
             services.AddControllers();
+            var healthCheckBuilder = services.AddHealthChecks();
+            healthCheckBuilder.AddCheck<StorageHealthCheck>(name: "Storage");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +54,8 @@ namespace WebAdvert.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseHealthChecks("/health");
 
             app.UseEndpoints(endpoints =>
             {

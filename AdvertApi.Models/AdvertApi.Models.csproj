@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Kerem Dokumacı</Authors>
+    <Company>None</Company>
+    <Product>Web Advert Microservices</Product>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+    <PackageId>AdvertApi.Models</PackageId>
   </PropertyGroup>
 
 </Project>

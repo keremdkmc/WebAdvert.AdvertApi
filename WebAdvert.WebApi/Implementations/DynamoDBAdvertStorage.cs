@@ -6,6 +6,8 @@ using AutoMapper;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using Amazon;
 
 namespace WebAdvert.WebApi.Implementations
 {
@@ -34,6 +36,21 @@ namespace WebAdvert.WebApi.Implementations
             }
 
             return dbModel.Id;
+        }
+
+        public async Task<bool> CheckHealthAsync()
+        {
+            try
+            {
+                var client = new AmazonDynamoDBClient(RegionEndpoint.USEast2);
+                var tableData = await client.DescribeTableAsync("Adverts");
+                return string.Compare(tableData.Table.TableStatus, "ACTIVE", true) == 0;
+            }
+            catch (Exception exception)
+            {
+                return false;
+            }
+            
         }
 
         public async Task Confirm(ConfirmAdvertModel model)
